@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <title>用户管理</title>
+    <style>
+        th{
+            text-align:center;
+        }
+        .hide{
+            display:none;
+        }
+        .shadow{
+            position:fixed;
+            left:0;
+            top:0;
+            right:0;
+            bottom:0;
+            background-color:black;
+            opacity:0.4;
+            z-index:999;
+        }
+        .modal1{
+            z-index:1000;
+            position:fixed;
+            left:50%;
+            top:50%;
+            height:359px;
+            width:300px;
+            background-color:white;
+            margin-left:-200px;
+            margin-top:-240px;
+        }
+        .modal2{
+            z-index:1000;
+            position:fixed;
+            left:50%;
+            top:50%;
+            height:315px;
+            width:300px;
+            background-color:white;
+            margin-left:-200px;
+            margin-top:-240px;
+        }
+        .modal_header{
+            background:#f7f7f7;
+            color:#669fc7;
+            border-bottom: 1px solid #DDD;
+            padding-left: 12px;
+            min-height: 30px;
+            position: relative;
+            box-sizing: content-box;
+        }
+        .modal_content{
+            border-bottom: 1px solid #DDD;
+            padding:29px 0px 33px 0px;
+        }
+        .modal_bottom{
+            background:#eff3f8;
+            height:41px;
+        }
+        .Editmodal_content{
+            border-bottom: 1px solid #DDD;
+            padding:34px 0px 33px 0px;
+        }
+        #errormsg{                   /* 新增用户错误提示 */
+            color:red;
+            font-size:15px;
+            margin:0px 82px;
+            line-height:42px;
+        }
+        #errormsg2{                       /* 修改密码错误提示 */
+            color:red;
+            font-size:15px;
+            margin:0px 82px;
+            line-height:42px;
+        }
+    </style>
+</head>
+<body>
+     <ol class="breadcrumb">
+              <li><a href="#">首页</a></li>
+              <li><a href="#">用户管理</a></li>
+              <li class="active">用户信息</li>
+     </ol>
+     <div style="margin:0px 0px 10px 0px;">
+         <a style=" text-decoration:none;" onclick="showModal()" href="#"> &nbsp;&nbsp;<i class="fa fa-plus-circle fa-2x" aria-hidden="true"></i></a>
+     </div>
+     <table  class="table table-bordered table-striped table-hover">
+         <thead>
+              <tr>
+                  <th><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;用户名 </th>
+                  <th><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;用户类型</th>
+                  <th><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;用户状态</th>
+                  <th><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;创建时间</th>
+                  <th><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;电话</th>
+                  <th><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;邮箱</th>
+                  <th><i class="fa fa-pencil-square" aria-hidden="true"></i>&nbsp;操作</th>
+              </tr>
+         </thead>
+         <tbody>
+              {% for row in user_list %}
+                 <tr style="text-align:center;">
+                     <td style="display:none;"> {{ row.id }}</td>
+                     <td> {{ row.username }}</td>
+                     <td> {{ row.user_type }} </td>
+                     <td><span class="label label-sm label-success">{{ row.user_state }}</span>  </td>
+                     <td> {{ row.dateTime | date:"Y-m-d H:i:s"  }}</td>
+                     <td> {{ row.phone }}</td>
+                     <td> {{ row.Email }}</td>
+                     <td>
+                         <a style="text-decoration:none;" onclick="return modelEdit(this);" href="#"/><i class="fa fa-pencil-square-o" aria-hidden="true"></i>修改&nbsp;</a>
+                         &nbsp;
+                         <a style="text-decoration:none;" onclick="return modal_password(this);" href="#"/><i class="fa fa-unlock-alt" aria-hidden="true"></i>重置密码&nbsp;</a>
+                         &nbsp;
+                         <a style="text-decoration:none;"  href="/deluser/?nid={{row.id}}"><i class="fa fa-times-circle" aria-hidden="true"></i>删除 </a>
+                     </td>
+                 </tr>
+              {% endfor %}
+         </tbody>
+     </table>
+
+     <nav aria-label="Page navigation">
+          <ul class="pagination">
+              {{ page_info.pager|safe }}
+          </ul>
+     </nav>
+
+     <div id="shadow" class="shadow hide"></div>
+
+     <div id="modal" class="modal1 hide">
+         <div class="modal_header"><h4 class="smaller">&nbsp;新增用户</h4></div>
+         <div class="modal_content">
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户名：<input id="username" type="text" name="username" placeholder="Username"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp; 码：<input id="password" type="password" name="password" placeholder="Password" /><br><br>
+             &nbsp;确认密码：<input id="password2" type="password" name="password" placeholder="Password" /><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电&nbsp;&nbsp; 话：<input id="phone" type="text" name="phone" placeholder="phone"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp; 箱：<input id="Email" type="email" name="Email" placeholder="Email"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="提交" onclick="AjaxSend();"/>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="取消" onclick="cancleModal();"/>
+         </div>
+         <div class="modal_bottom">
+             <span id="errormsg"></span>
+         </div>
+     </div>
+
+     <div id="Editmodal" class="modal2 hide">
+         <div class="modal_header"><h4 class="smaller">修改用户信息</h4></div>
+         <div class="Editmodal_content">
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户名：<input id="edit_username" type="text" name="username"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电&nbsp;&nbsp; 话：<input id="edit_phone" type="text" name="phone"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp; 箱：<input id="edit_Email" type="text" name="Email"/><br><br>
+                                             <input id="edit_id" type="text" name="id" style="display:none"/>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="提交" onclick="editAjaxSend();"/>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="取消" onclick="cancleModal();"/> <span id="editError" style="color:red;"></span>
+         </div>
+         <div class="modal_bottom"></div>
+     </div>
+
+     <div id="modal_password1" class="modal2 hide">
+         <div class="modal_header"><h4 class="smaller">修改密码</h4></div>
+         <div class="Editmodal_content">
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原始密码：<input id="o_password" type="password" name="password1"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;新&nbsp;密&nbsp;码&nbsp;：<input id="n_password" type="password" name="password2"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;确认密码：<input id="n_password2" type="password" name="password3"/><br><br>
+                                             <input id="edit_id2" type="text" name="id" style="display:none"/>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="提交" onclick="password_AjaxSend();"/>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="取消" onclick="cancleModal();"/>
+         </div>
+         <div class="modal_bottom"><span id="errormsg2"></span></div>
+     </div>
+     <script>
+         //该函数触发对话框,新增用户
+         function showModal(){
+             document.getElementById("shadow").classList.remove("hide");
+             document.getElementById("modal").classList.remove("hide");
+         }
+         //取消对话框
+         function cancleModal(){
+             document.getElementById("shadow").classList.add("hide");
+             document.getElementById("modal").classList.add("hide");         //取消新增对话框
+             document.getElementById("Editmodal").classList.add("hide");     //取消编辑对话框
+             document.getElementById("modal_password1").classList.add("hide");     //取消修改密码对话框
+         }
+
+         function AjaxSend(){
+            $.ajax({
+                url:'/modal_add_user/',
+                type:'POST',                              //提交数据到后端
+                data:{ 'username':$('#username').val(), 'phone':$('#phone').val(), 'Email':$('#Email').val(),'password':$('#password').val(),'password2':$('#password2').val(),},       //注意逗号不要少，获取数据
+                success:function(data){                   //后端处理数据成功后，返回成功处理该函数，data是返回的数据
+                     console.log(data);                    //调试台
+                     if (data=="ok"){
+                        location.reload();           //页面跳转
+                     }
+                     else{
+                        $("#errormsg").text(data);            //对话框提示
+                     }
+                }
+            });
+         }
+         //点击编辑，获取当前用户信息的值
+         function modelEdit(ths){
+             document.getElementById("shadow").classList.remove("hide");   //移除隐藏的编辑对话框
+             document.getElementById("Editmodal").classList.remove("hide");  //移除隐藏的编辑对话框
+             var row = $(ths).parent().prevAll();        //获取当前标签全部父标签
+
+             var content_Email = $(row[0]).text();              //row[0]获取父标签顺序是倒序往上    //return false;阻止后续事件发生
+             $('#edit_Email').val(content_Email);
+
+             var content_phone = $(row[1]).text();
+             $('#edit_phone').val(content_phone);
+
+             var content_username = $(row[5]).text();
+             $('#edit_username').val(content_username);
+
+             var content_id = $(row[6]).text();
+             $('#edit_id').val(content_id);
+         }
+
+         function editAjaxSend(){
+             //获取用户新输入的值
+             var username = $('#edit_username').val();
+             var phone = $('#edit_phone').val();
+             var Email = $('#edit_Email').val();
+             var nid = $('#edit_id').val();
+             $.ajax({
+                 url:'/modal_edit_user/',
+                 type:'POST',
+                 data:{'username':username,'phone':phone,'Email':Email,'nid':nid},
+                 success:function(arg){
+                    //arg是字符串类型
+                    //JSON.parse(字符串)=>对象
+                    //JSON.stringify(对象)=>字符串
+                     arg = JSON.parse(arg);
+                     if(arg.status){      //判断状态
+                           location.reload();  //当前页面刷新
+                     }
+                     else{
+                           $('#editError').text(arg.message);
+                     }
+                 }
+             });
+         }
+
+         function modal_password(ths){                                   //触发修改密码对话框
+             document.getElementById("shadow").classList.remove("hide");
+             document.getElementById("modal_password1").classList.remove("hide");
+             var row = $(ths).parent().prevAll();                       //获取当前标签全部父标签
+             var content_id = $(row[6]).text();                         //获取id的值
+             $('#edit_id2').val(content_id);
+         }
+         //修改密码ajax
+         function password_AjaxSend(){
+             var nid = $('#edit_id2').val();                    //获取对应id的值
+             $.ajax({
+                  url:'/modal_edit_password/',
+                  type:'POST',
+                  data:{'o_password':$('#o_password').val(),'n_password':$('#n_password').val(),'n_password2':$('#n_password2').val(),'nid':nid},
+                  success:function(data){
+                      console.log(data);
+                      if (data=="ok"){
+                          location.reload();            //当前页面刷新
+                      }
+                      else{
+                          $("#errormsg2").text(data);                //错误提示
+                      }
+                  }
+             });
+         }
+     </script>
+</body>
+</html>

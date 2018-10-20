@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <title>告警管理 </title>
+    <style>
+        th{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <ol class="breadcrumb">
+              <li><a href="#">首页</a></li>
+              <li><a href="#">告警管理</a></li>
+              <li class="active">告警信息</li>
+    </ol>
+    <div style="margin:0px 0px 10px 0px;">
+          &nbsp;<a class="btn btn-info" onclick="showModal()" href="#">批量操作 </a>
+    </div>
+    <table  class="table table-bordered table-striped table-hover">
+         <thead>
+              <tr>
+                  <th><input type="checkbox" id="checkAll" value=""></th>
+                  <th>&nbsp;发生时间 </th>
+                  <th>&nbsp;设备SN</th>
+                  <th>&nbsp;数采器PN</th>
+                  <th>&nbsp;告警级别</th>
+                  <th>&nbsp;告警编码</th>
+                  <th>&nbsp;告警描述</th>
+                  <th>&nbsp;处理状态</th>
+                  <th>&nbsp;所属电站</th>
+                  <th>&nbsp;消失时间</th>
+                  <th>&nbsp;操作</th>
+              </tr>
+         </thead>
+         <tbody>
+         </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+</body>
+</html>

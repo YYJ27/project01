@@ -1,0 +1,168 @@
+{% extends 'myApp/test1.html' %}
+
+{% block xx %}
+
+     <div style="margin:0px 0px 10px 0px;">
+         <a class="btn btn-primary"  href="/addclass/"> 添加 </a>
+         <a class="btn btn-info" onclick="showModal()" href="#"> 对话框添加 </a>
+     </div>
+     <table class="table table-bordered table-striped table-hover">
+         <thead>
+              <tr>
+                  <th>ID  </th>
+                  <th>设备名称</th>
+                  <th>操作</th>
+              </tr>
+         </thead>
+         <tbody>
+              {% for row in class_list %}
+                 <tr>
+                     <td> {{ row.id }}</td>
+                     <td> {{ row.title }}</td>
+                     <td>
+                         <a class="glyphicon glyphicon-pencil" href="/editclass/?nid={{row.id}}"> 编辑 </a>
+                         |
+                         <a class="glyphicon glyphicon-tag"  onclick="return modelEdit(this);" href="#"> 对话框编辑 </a>
+                         |
+                         <a class="glyphicon glyphicon-trash" href="/delclass/?nid={{row.id}}"> 删除 </a>
+                     </td>
+                 </tr>
+              {% endfor %}
+         </tbody>
+     </table>
+     <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+     </nav>
+     <div id="shadow" class="shadow hide"></div>
+
+     <div id="modal" class="modal1 hide">
+         <br><br>
+         <p>添加班级：<input id="title" type="text" name="title"/></p>
+         <input type="submit" value="提交" onclick="AjaxSend();"/><span id="errormsg"></span>
+         <input type="submit" value="取消" onclick="cancleModal();"/>
+     </div>
+
+     <div id="Editmodal" class="modal1 hide">
+         <h3> 对话框编辑 </h3>
+         <p>
+             编辑班级：<input id="edittitle" type="text" name="title"/>
+                       <input id="editid" type="text" name="id" style="display:none"/>
+         </p>
+         <input type="submit" value="提交" onclick="editAjaxSend();"/><span id="editerrormsg"></span>
+         <input type="submit" value="取消" onclick="cancleModal();"/>
+     </div>
+
+     <script src="/static/js/jquery-3.3.1.js"></script>
+     <script>
+          //该函数触发对话框
+          function showModal(){
+             document.getElementById("shadow").classList.remove("hide");
+             document.getElementById("modal").classList.remove("hide");
+          }
+          //取消对话框
+          function cancleModal(){
+             document.getElementById("shadow").classList.add("hide");
+             document.getElementById("modal").classList.add("hide");
+             document.getElementById("Editmodal").classList.add("hide");
+          }
+          //该函数触发提交按钮
+          function AjaxSend(){
+          //发送ajax请求
+                $.ajax({
+                    url:'/modal_add_class/',
+                    type:'POST',                              //提交数据到后端
+                    data:{ 'title':$('#title').val()},       //注意逗号不要少，获取数据
+                    success:function(data){                   //后端处理数据成功后，返回成功处理该函数，data是返回的数据
+
+                         console.log(data);                    //调试台
+                         if (data=="ok"){
+                            location.href="/classes/";          //页面跳转
+                         }
+                         else{
+                            $("#errormsg").text(data);            //对话框提示
+                         }
+                    }
+                });
+          }
+
+          function modelEdit(ths){
+             document.getElementById("shadow").classList.remove("hide");   //移除隐藏
+             document.getElementById("Editmodal").classList.remove("hide");
+             var row = $(ths).parent().prevAll();        //获取当前标签全部父标签
+             var content = $(row[0]).text();              //row[0]获取父标签td,title,倒序往上    //return false;阻止后续事件发生
+             $('#edittitle').val(content);
+
+             var contentId = $(row[1]).text();         //获取当前显示id内容
+             $('#editid').val(contentId);
+          }
+
+          function editAjaxSend(){
+             //获取用户新输入的值
+             var nid = $('#editid').val();
+             var content = $('#edittitle').val();
+             $.ajax({
+                 url:'/modal_edit_class/',
+                 type:'POST',
+                 data:{'nid':nid,'content':content},
+                 success:function(arg){
+                     //arg是字符串类型
+                    //JSON.parse(字符串)=>对象
+                    //JSON.stringify(对象)=>字符串
+                     arg = JSON.parse(arg);
+                     if(arg.status){      //判断状态
+                           location.reload();  //当前页面刷新
+                     }
+                     else{
+                           alert(arg.message);
+                     }
+                 }
+             });
+          }
+     </script>
+
+{% endblock %}
+
+{% block ss %}
+
+  .hide{
+            display:none;
+        }
+        .shadow{
+            position:fixed;
+            left:0;
+            top:0;
+            right:0;
+            bottom:0;
+            background-color:black;
+            opacity:0.4;
+            z-index:999;
+        }
+        .modal1{
+            z-index:1000;
+            position:fixed;
+            left:50%;
+            top:50%;
+            height:300px;
+            width:400px;
+            background-color:white;
+            margin-left:-200px;
+            margin-top:-150px;
+        }
+
+{% endblock %}

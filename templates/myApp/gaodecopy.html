@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>高德地图监控</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.8&key=28c4ca23a70f8cc7a4c0440036cbeeb5"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style>
+    ul.padding
+    {
+        padding-left:2px;
+	    padding-right:30px
+    }
+    ul{
+       list-style:none;
+    }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script type="text/javascript">
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:4,
+        center: [116.397428, 39.90923]
+    });
+
+    var markers = [];
+    var infoWindow;
+    var provinces=[{"fLong":'116.397428','fLati':'39.909','name':'北京'},{ "fLong":'112.93533','fLati':'28.236018','name':'长沙'},{ "fLong":'110.294028','fLati':'25.275636','name':'桂林'}]  //获取省份经纬度
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -12)});  //定义视窗的偏移量
+    for(var i=0;i<provinces.length;i++){
+        var marker;   //定义标记
+        marker = new AMap.Marker({
+            position:[provinces[i].fLong,provinces[i].fLati],     //获取经纬度
+            map: map,
+            offset: new AMap.Pixel(-12,-12),
+        });
+       // var d=new Date();
+        marker.content = (
+                         "<ul class='padding'>\
+                         <li><span style='color:blue;'><b> 设备实时信息显示</b></span></li>"
+                         + "<li>  城市/区: <span style='color:blue'>"+provinces[i].name+"  </span></li>"
+                         + "<li>  当前时间: <span style='color:blue'>"+new Date().toLocaleString()+" </span></li>"
+				         + "<li>  日发电量: <span style='color:blue'>"+"12kwh"+"  </span></li>"
+				         + "<li>  总发电量: <span style='color:blue'>"+"200kwh"+"  </span></li>"
+				         + "<li>  温度: <span style='color:blue'>"+"27℃"+"  </span></li>"
+				         + "<li>  设备是否异常 : <span style='color:blue'>"+"否"+"  </span></li></ul>");
+        marker.on('click', markerClick);
+        marker.emit('click', {target: marker});
+    }
+    function markerClick(e) {
+        infoWindow.setContent(e.target.content);
+        infoWindow.open(map, e.target.getPosition());
+    }
+</script>
+</body>
+</html>

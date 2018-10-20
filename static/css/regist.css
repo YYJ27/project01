@@ -1,0 +1,112 @@
+
+         #base{
+            border:0px solid #417690;
+            width:400px;
+            height:453px;
+            margin:auto;
+            padding-top:1px;
+            background-color:white;
+         }
+         #base-title{
+            border:1px solid #417690;
+            width:400px;
+            height:84px;
+            margin:auto;
+            float:left;
+            padding-top:0px;
+            background-color:#136cbf;
+
+         }
+
+         #base-regist{
+            border:1px solid #417690;
+            width:400px;
+            height:43px;
+            margin:auto;
+            float:left;
+            padding-top:11px;
+            font-size:25px;
+            text-align:center;
+         }
+          #base-username{
+            border:1px solid #417690;
+            width:400px;
+            height:40px;
+            margin:auto;
+            float:left;
+            padding-top:10px;
+            font-size:20px;
+         }
+         #base-pwd1{
+            border:1px solid #417690;
+            width:400px;
+            height:40px;
+            margin:auto;
+            float:left;
+            padding-top:10px;
+            font-size:20px;
+         }
+         #base-pwd2{
+            border:1px solid #417690;
+            width:400px;
+            height:40px;
+            margin:auto;
+            float:left;
+            padding-top:10px;
+            font-size:20px;
+         }
+         #base-email{
+            border:1px solid #417690;
+            width:400px;
+            height:40px;
+            margin:auto;
+            float:left;
+            padding-top:10px;
+            font-size:20px;
+         }
+         #base-tel{
+            border:1px solid #417690;
+            width:400px;
+            height:40px;
+            margin:auto;
+            float:left;
+            padding-top:10px;
+            font-size:20px;
+         }
+         #base-button{
+            border:1px solid #417690;
+            width:198px;
+            height:45px;
+            margin:auto;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+         }
+         #base-login{
+            border:1px solid #417690;
+            width:198px;
+            height:45px;
+            margin:auto;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+         }
+         #tip{
+            border:0px solid red;
+            width:400px;
+            height:45px;
+            margin:auto;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+            display:inline;
+            font-size:20px;
+            color:white;
+         }
+         body{
+            padding-top:80px;
+            background-image:url("http://dpic.tiankong.com/bv/82/QJ8142030646.jpg?x-oss-process=style/show");
+            background-repeat: no-repeat;
+            background-size:1370px 650px;
+            //background-color:#f8f8f8;
+         }

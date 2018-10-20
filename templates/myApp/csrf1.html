@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <title>csrf1</title>
+</head>
+<body>
+      <form method="post" action="/csrf1/">
+          {% csrf_token %}
+          <input id="user" type="text" name="user"/>
+          <input type="submit" value="提交"/>
+          <a onclick="submitForm();">Ajax提交</a>
+      </form>
+      <script>
+         //ajax  csrf第一种方法
+         
+          function submitForm(){
+              var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+              var user = $("#user").val();
+              $.ajax({
+                   url:'/csrf1/',
+                   type:'POST',
+                   data:{ "user":user,"csrfmiddlewaretoken":csrf },
+                   success:function(arg){
+                        console.log(arg);
+                   }
+              })
+          }
+          /*
+          function submitForm(){
+              var token = $.cookie('csrftoken');
+              var user = $("#user").val();
+              $.ajax({
+                   url:'/csrf1/',
+                   type:'POST',
+                   headers:['X-CSRFToken',token],
+                   data:{ "user":user },
+                   success:function(arg){
+                        console.log(arg);
+                   }
+              });
+          }
+          */
+      </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

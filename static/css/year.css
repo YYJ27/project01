@@ -1,0 +1,144 @@
+ #menue{
+      border:1px solid #ccc;
+      height:50px;
+      margin:-19px 0px 0px 0px;
+ }
+ #menue1{
+     border:1px solid #46b8da;
+     border-radius:6px;
+     height:40px;
+     width:85px;
+     padding:0px 0px 0px 0px;
+     margin:4px 0px 0px 408px;
+ }
+ #menue1:hover{
+     background-color:#46b8da;
+ }
+ #menue1:hover a{
+     color:white;
+ }
+ #menue1 a{
+     text-decoration:none;
+ }
+ #menue a{
+     line-height:40px;
+     margin:0px 0px 0px 13px;
+ }
+ #menue2{
+     border:1px solid #46b8da;
+     border-radius:6px;
+     height:40px;
+     width:85px;
+     float:left;
+     padding:0px 0px 0px 0px;
+     margin:-40px 0px 0px 497px;
+ }
+  #menue2:hover{
+     background-color:#46b8da;
+ }
+ #menue2:hover a{
+     color:white;
+ }
+ #menue2 a{
+     text-decoration:none;
+ }
+ #menue3{
+     border:1px solid #46b8da;
+     border-radius:6px;
+     height:40px;
+     width:85px;
+     float:left;
+     padding:0px 0px 0px 0px;
+     margin:-40px 0px 0px 586px;
+ }
+  #menue3:hover{
+     background-color:#46b8da;
+ }
+ #menue3:hover a{
+     color:white;
+ }
+ #menue3 a{
+     text-decoration:none;
+ }
+ #menue4{
+     border:1px solid #46b8da;
+     height:40px;
+     border-radius:6px;
+     width:85px;
+     float:left;
+     padding:0px 0px 0px 0px;
+     margin:-40px 0px 0px 675px;
+ }
+  #menue4:hover{
+     background-color:#46b8da;
+ }
+ #menue4:hover a{
+     color:white;
+ }
+ #menue4 a{
+     text-decoration:none;
+ }
+ #content-left{
+     border:1px solid #ccc;
+     height:450px;
+     width:330px;
+     float:left;
+     left:0px;
+     margin:15px 0px 0px 30px;
+ }
+ #content-right{
+     border:1px solid #ccc;
+     height:450px;
+     width:700px;
+     float:left;
+     left:0px;
+     margin:15px 0px 0px 50px;
+ }
+ #Time{
+     border:0px solid #ccc;
+     font-size:20px;
+     line-height:60px;
+     height:60px;
+     width:300px;
+     margin:71px 0px 0px 13px;
+     padding:0px 0px 0px 25px;
+ }
+
+ #daily{
+     border:0px solid #ccc;
+     font-size:20px;
+     line-height:60px;
+     height:60px;
+     width:300px;
+     margin:0px 0px 0px 13px;
+     padding:0px 0px 0px 25px;
+ }
+
+ #month{
+     border:0px solid #ccc;
+     font-size:20px;
+     line-height:60px;
+     height:60px;
+     width:300px;
+     margin:0px 0px 0px 13px;
+     padding:0px 0px 0px 25px;
+ }
+ #year{
+     border:0px solid #ccc;
+     font-size:20px;
+     line-height:60px;
+     height:60px;
+     width:300px;
+     margin:0px 0px 0px 13px;
+     padding:0px 0px 0px 25px;
+ }
+
+ #total{
+     border:0px solid #ccc;
+     font-size:20px;
+     line-height:60px;
+     height:60px;
+     width:300px;
+     margin:0px 0px 0px 13px;
+     padding:0px 0px 0px 25px;
+ }

@@ -1,0 +1,106 @@
+    body{
+        margin:0;
+    }
+    .left{
+       float:left;            /* 统一left */
+    }
+    .right{
+       float:right;
+    }
+    .pg-header{
+        height:48px;
+        min-width:1190px;
+        background-color:#204d74;
+        line-height:48px;          /* 字体上下居中 */
+    }
+    .pg-header .logo{
+        border:0px solid #ccc;
+        color:white;
+        font-size:21px;
+        width:330px;
+        text-align:center;        /* 字体左右对齐 */
+    }
+    .menus{
+        border:1px solid #dddddd;
+        background-color:#dddddd;
+        width:198px;
+        left:0;
+        top:48px;
+        bottom:0;
+        position:absolute;
+
+    }
+    .content{
+        border:0px solid #dddddd;
+        min-width:990px;           /* 小于此分辨率出现滚动条 */
+        background-color:white;
+        overflow:scroll;       /* 超出页面出现滚动条 */
+        position:absolute;
+        left:200px;
+        top:48px;
+        bottom:0;
+        right:0;
+        z-index:99;
+    }
+     /* 头部-右边 */
+    .pg-header .rmenus a{
+       display:inline-block;
+       padding: 0 15px;
+       color:white;        /* 字体颜色 */
+       text-decoration:none;
+    }
+    .pg-header .lmenus a{
+       display:inline-block;
+       padding: 0 15px;
+       color:white;        /* 字体颜色 */
+       text-decoration:none;
+
+    }
+
+     /* 鼠标滑动的颜色区分 */
+     .pg-header .rmenus a:hover{
+         background-color:#269abc;
+     }
+    .pg-header .lmenus a:hover{
+         background-color:#269abc;
+    }
+    .pg-header .avatar{
+         padding :0 20px;     /* 设置图片右宽度 */
+    }
+    #Img{
+         border-radius:50%;    /* 将图片变成圆的 */
+         margin:2px 0px 0px 0px;
+         height:30px;
+         width:30px;
+    }
+    .pg-header .avatar .user-info{         /* 设置个人资料框位置大小 */
+         border:1px solid #417690;
+         position:absolute;
+         width:100px;
+         top:48px;
+         right:2px;
+         background-color:white;
+         color:white;
+         z-index:100;
+         display:none;             /* 将图片下的个人资料隐藏 */
+    }
+    .hide{
+         display:none;
+    }
+    .pg-header .avatar:hover .user-info{
+         display:block;            /* 当鼠标移到到图片时显示图片下的个人资料 */
+    }
+    .pg-header .avatar .user-info a{         /* 将图片下的个人资料进行列排列 */
+         display:block;
+    }
+    .pg-body .menus a{
+         display:block;                 /* 每个a标签占一行 */
+         padding:16px 5px;
+         border:1px solid #fff;       /* 每个a标签加边框 */
+         text-decoration:none;         /* 去掉连接下划线 */
+    }
+    .pg-body .menus a:hover{
+         background-color:#337ab7;
+         color:white;
+    }
+

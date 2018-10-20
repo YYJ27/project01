@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑老师</title>
+</head>
+<body>
+    <h1> 编辑老师 </h1>
+    <form method="POST" action="/editteacher/?nid={{result.id}}">
+         <!--提交时，将id提交到后端，但不显示在页面-->
+         <!--<input style="display:none" name="id" value="{{result.id}}"/> -->
+         <!--提交title-->
+         <p>班级名称：<input type="text" name="name" value="{{ result.name }}"/></p>
+         <input type="submit" value="提交"/>
+    </form>
+</body>
+</html>

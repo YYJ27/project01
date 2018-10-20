@@ -1,0 +1,80 @@
+         body{
+            padding-top:180px;
+             // background-image:url("https://img.zcool.cn/community/01ed21554346c60000019ae98a6c6a.jpg@1280w_1l_2o_100sh.webp");
+            background-repeat: no-repeat;
+            background-size:1370px 650px;
+            background-color:#f8f8f8;
+         }
+         #father{
+            border:1px solid #417690;
+            width:450px;
+            height:260px;
+            margin:auto;
+            background-color:white;
+         }
+        #title{
+            border:1px solid #417690;
+            width:450px;
+            height:42px;
+            margin:auto;
+            background-color:#417690;
+            padding-top:8px;
+        }
+        #userlogin{
+            border:1px solid #417690;
+            width:450px;
+            height:41px;
+            margin:auto;
+            font-size:20px;
+            padding-top:9px;
+        }
+        #username{
+            border:1px solid #417690;
+            width:450px;
+            height:41px;
+            margin:auto;
+            font-size:20px;
+            padding-top:9px;
+        }
+        #password{
+            border:1px solid #417690;
+            width:450px;
+            height:41px;
+            margin:auto;
+            font-size:20px;
+            padding-top:9px;
+        }
+        #login{
+            border:1px solid #417690;
+            width:224px;
+            height:45px;
+            margin:auto;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+        }
+        #regist1{
+            border:1px solid #417690;
+            width:222px;
+            height:45px;
+            margin:-16px 0px 0px 0px ;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+        }
+         div p{
+            font-size:25px;
+            color:white;
+            display:inline;
+        }
+         #tips{
+            border:0px solid #red;
+            width:449px;
+            height:47px;
+            margin:auto;
+            float:left;
+            text-align:center;
+            padding-top:5px;
+            font-size:20px;
+            color:red;
+         }

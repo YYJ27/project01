@@ -1,0 +1,107 @@
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{%static 'css/year.css'%}" type="text/css"/>
+    <title>ECharts</title>
+</head>
+<body>
+    <ol class="breadcrumb">
+              <li><a href="#">首页</a></li>
+              <li><a href="#">电站信息</a></li>
+              <li class="active">***电站概况</li>
+    </ol>
+
+    <div id="menue">
+        <div id="menue1">
+            <a href="/power/"> 实时功率 </a>
+        </div>
+        <div  id="menue2">
+            <a href="/daily/"> 日发电量 </a>
+        </div>
+        <div id="menue3">
+            <a href="/month/"> 月发电量 </a>
+        </div>
+        <div id="menue4">
+            <a href="/year/"> 年发电量 </a>
+        </div>
+    </div>
+
+    <div id="content-left">
+
+        <div id="Time">  时 间：<span id="time1" style="color:red;">  </span> </div>
+        <div id="daily">今日发电量：<span style="color:red;"> 455.8kwh </span> </div>
+        <div id="month"> 当月发电量：<span style="color:red;"> 62349.6kWh</span> </div>
+        <div id="year"> 当年发电量：<span style="color:red;"> 392814.3kWh </span> </div>
+        <div id="total"> 累计发电量：<span style="color:red;"> 419435.1kWh </span> </div>
+
+    </div>
+    <div  id="content-right">
+
+        <div id="main" style="background-color:white;height:400px;width:690px;top:25px;left:5px;"></div>
+
+    </div>
+    <script>
+        //显示日期
+        function mytime(){
+            var a = new Date();
+            var b = a.toLocaleTimeString();
+            var c = a.toLocaleDateString();
+            document.getElementById("time1").innerHTML = c+b;
+        }
+        setInterval(function() {mytime()},1000);
+    </script>
+    <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.min.js"></script>
+    <script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        option = {
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            title : {
+                        text: '年发电量',
+                        x: 'center',
+                        align: 'right'
+                    },
+            grid: {
+                left: '2%',
+                right: '2%',
+                bottom: '2%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+
+                    type : 'category',
+                    data : ['01','02','03','04','05','06','07','08','09','10','11','12'],
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    name : '单位(kwh)',
+                }
+            ],
+            series : [
+                {
+                    name:'年发电量',
+                    type:'bar',
+                    barWidth: '60%',
+                    data:[25204,49739,55552,68155,69011,84496,87694,62012]
+                }
+            ]
+        };
+        myChart.setOption(option);
+    </script>
+</body>

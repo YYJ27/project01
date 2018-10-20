@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="http://e.xianzhi.net/uploads/allimg/150313/45_150313162122_7_lit.png" type="image/x-icon"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{%static 'css/class.css'%}" type="text/css"/>
+    <title>Title</title>
+    <style>
+        #btna2,#btna3{
+            display:none;
+        }
+        #btna2 a{
+            padding:16px 54px 16px 28px;
+            background-color:#ffffff9e;
+        }
+        #btna3 a{
+            padding:16px 96px 16px 28px;
+            background-color:#ffffff9e;
+        }
+        #btna2 a:hover,#btna3 a:hover{
+            background-color:#23527c87;
+        }
+        {% block ss %} {% endblock %}
+    </style>
+    <script>
+        $(document).ready(function(){
+          $("#btna1").click(function(){
+             $("#btna2").slideToggle("slow");
+          });
+        });
+
+        $(document).ready(function(){
+          $("#btna4").click(function(){
+             $("#btna3").slideToggle("slow");
+          });
+        });
+    </script>
+</head>
+<body>
+   <div class="pg-header">
+       <div class="logo left"> 光伏监控平台 </div>
+       <div class="avatar right" style="position:relative;">
+           <img style="height:40px;width:40px;" src="https://image.cn.made-in-china.com/25f20j01BTutVNbamQhE/made-in-china.jpg">
+           <div class="user-info">
+               <a> 个人资料 </a>
+               <a> 注销 </a>
+           </div>
+       </div>
+       <div class="lmenus left"><a style="line-height:48px;" class="glyphicon glyphicon-home" href="#"> 首页 </a></div>
+       <div class="rmenus right">
+           <a class="glyphicon glyphicon-hdd" href="#"> 报警 </a>
+           <a class="glyphicon glyphicon-share"  href="/logout/">注销</a>
+           <!--从session中获得当前登陆用户的用户名-->
+           <a class="glyphicon glyphicon-user" href="#">{{request.session.user_info.username}}</a>
+
+       </div>
+   </div>
+
+   <div class="pg-body">
+       <div class="menus">
+           <a  href="/gaode/"  class="glyphicon glyphicon-globe" >地图监控(高德)</a>
+           <a href="#" class="glyphicon glyphicon-dashboard">设备监控</a>
+           <a  id="btna1" class="glyphicon glyphicon-queen" href="#">能效分析</a>
+           <span id="btna2">
+               <a class="glyphicon glyphicon-record" target="iFrame1" href="/daily/"> 发电量分析 </a>
+               <a class="glyphicon glyphicon-record" href="#"> 发电效率分析 </a>
+               <a class="glyphicon glyphicon-record" href="#"> 报警分析 </a>
+           </span>
+           <a id="btna4" class="glyphicon glyphicon-th-large"  href="#">后台管理</a>
+           <span id="btna3">
+               <a  class="glyphicon glyphicon-folder-open" href="#">个人信息</a>
+               <a  href="/shebei_jicheng/"  class="glyphicon glyphicon-wrench" >设备管理</a>
+               <a  class="glyphicon glyphicon-user"  href="#">用户管理</a>
+               <a  class="glyphicon glyphicon-warning-sign" href="#">告警管理</a>
+           </span>
+       </div>
+       <div class="content">
+
+             {% block xx %} {% endblock %}
+
+       </div>
+   </div>
+</body>
+</html>

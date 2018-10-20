@@ -1,0 +1,54 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>用户注册</title>
+    <link rel="stylesheet" href="{%static 'css/regist.css'%}" type="text/css"/>
+</head>
+<body>
+     <div id="base">
+         <div id="base-title">
+             <p style="font-size:27px;color:white;text-align:center;">诺诚光伏远程监控系统</p>
+         </div>
+         <div id="base-regist">
+              新用户注册
+         </div>
+         <form action=""  method = 'post' enctype="multipart/form-data">
+
+         <div id="base-username">
+             <label for="id_username">&nbsp;&nbsp;&nbsp;&nbsp;用户名：</label>
+             <input type="text" name="username" id="id_username" placeholder="Username" autofocus required style="width:250px; height:25px;"/>
+         </div>
+         <div id="base-pwd1">
+             <label for="id_password1">&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码：</label>
+             <input type="password" name="password1" id="id_password1" placeholder="Password" required style="width:250px; height:25px;"/>
+         </div>
+         <div id="base-pwd2">
+             <label for="id_password2">确认密码：</label>
+             <input type="password" name="password2" id="id_password2" placeholder="Password" required style="width:250px; height:25px;"/>
+         </div>
+         <div id="base-email">
+             <label for="id_Email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email：</label>
+             <input type="email" name="Email" id="id_Email" placeholder="Email" required style="width:250px; height:25px;"/>
+         </div>
+         <div id="base-tel">
+             <label for="id_phone">电话号码：</label>
+             <input type="text" name="phone" id="id_phone" placeholder="phone" required style="width:250px; height:25px;"/>
+         </div>
+         <div id="base-button">
+              <input type="submit" value = "注册" style="width:80px;height:40px;background:#136cbf;color:#fff;"/>
+         </div>
+         </form>
+         <div id="base-login">
+              <form action="/login/">
+                     <input type="submit" value = "登陆" style="width:80px;height:40px;background:#136cbf;color:#fff;"/>
+              </form>
+         </div>
+
+             {% if message %}
+         <div id="tip">{{message}}</div>
+             {% endif %}
+     </div>
+
+</body>
+</html>

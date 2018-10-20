@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="http://photo.16pic.com/00/01/32/16pic_132796_b.jpg"/>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="{%static 'css/class.css'%}" type="text/css"/>
+    <title>诺城光伏</title>
+    <style>
+        #btna2,#btna3,#btna5{
+            display:none;
+        }
+        #btna2 a{
+            padding:16px 52px 16px 30px;
+            background-color:#ffffff9e;
+        }
+        #btna3 a{
+            padding:16px 81px 16px 29px;
+            background-color:#ffffff9e;
+        }
+        #btna5 a{
+            padding:16px 64px 16px 32px;
+            background-color:#ffffff9e;
+        }
+        #btna2 a:hover,#btna3 a:hover,#btna5 a:hover{
+            background-color:#23527c87;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+          $("#btna1").click(function(){
+             $("#btna2").slideToggle("slow");
+             $("#btna3").slideUp("slow");
+             $("#btna5").slideUp("slow");
+          });
+        });
+
+        $(document).ready(function(){
+          $("#btna4").click(function(){
+             $("#btna3").slideToggle("slow");
+             $("#btna2").slideUp("slow");
+             $("#btna5").slideUp("slow");
+          });
+        });
+
+        $(document).ready(function(){
+          $("#btna6").click(function(){
+             $("#btna5").slideToggle("slow");
+             $("#btna3").slideUp("slow");
+             $("#btna2").slideUp("slow");
+          });
+        });
+    </script>
+</head>
+<body>
+   <div class="pg-header">
+       <div class="logo left"> LOGO 诺诚光伏监控平台 </div>
+       <!--<div class="lmenus left"><a style="line-height:48px;"  href="/test/"><i class="fa fa-home fa-fw" aria-hidden="true"></i> 首页 </a></div>-->
+       <div class="rmenus right">
+           <a href="#"><i id="Tips" class="fa fa-bell-o" aria-hidden="true"></i> 报警 </a>
+           <!--从session中获得当前登陆用户的用户名-->
+           <a href="#"><img id="Img" src="https://dpic.tiankong.com/bv/82/QJ8142030646.jpg?x-oss-process=style/670w">&nbsp;{{request.session.user_info.username}}</a>
+           <a  href="/logout/"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;退出</a>
+       </div>
+   </div>
+
+   <div class="pg-body">
+       <div class="menus">
+           <a  href="/gaode/" target="iFrame1" class="glyphicon glyphicon-globe">&nbsp;地图监控(高德)</a>
+           <a href="#"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;设备监控</a>
+           <a id="btna6" style="margin:0px -2px;" href="#"><i class="fa fa-desktop" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;统计报表</a>
+           <span id="btna5">
+               <a class="glyphicon glyphicon-record" href="#">&nbsp;发电量报表 </a>
+               <a class="glyphicon glyphicon-record" href="#">&nbsp;逆变器报表 </a>
+           </span>
+           <a  id="btna1" href="#"><i class="fa fa-pie-chart" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;&nbsp;能效分析</a>
+           <span id="btna2">
+               <a class="glyphicon glyphicon-record" target="iFrame1" href="/daily/">&nbsp;发电量分析 </a>
+               <a class="glyphicon glyphicon-record" href="#">&nbsp;发电效率分析 </a>
+               <a class="glyphicon glyphicon-record" href="#">&nbsp;报警分析 </a>
+           </span>
+           <a id="btna4" class="glyphicon glyphicon-th-large"  href="#">&nbsp;后台管理</a>
+           <span id="btna3">
+               <a  href="/shebei/" target="iFrame1" class="glyphicon glyphicon-wrench" >&nbsp;设备管理</a>
+               <a  class="glyphicon glyphicon-user"  href="/user_managet/" target="iFrame1">&nbsp;用户管理</a>
+               <a  class="glyphicon glyphicon-warning-sign" href="/Alarm/" target="iFrame1">&nbsp;告警管理</a>
+           </span>
+       </div>
+       <div class="content">
+
+           <iframe src="/gaode/" name="iFrame1" width="100%" height="100%"></iframe>
+
+       </div>
+   </div>
+</body>
+</html>

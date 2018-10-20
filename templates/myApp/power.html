@@ -1,0 +1,101 @@
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{%static 'css/year.css'%}" type="text/css"/>
+    <title>ECharts</title>
+</head>
+<body>
+    <ol class="breadcrumb">
+              <li><a href="#">首页</a></li>
+              <li><a href="#">电站信息</a></li>
+              <li class="active">***电站概况</li>
+    </ol>
+
+    <div id="menue">
+        <div id="menue1">
+            <a href="/power/"> 实时功率 </a>
+        </div>
+        <div  id="menue2">
+            <a href="/daily/"> 日发电量 </a>
+        </div>
+        <div id="menue3">
+            <a href="/month/"> 月发电量 </a>
+        </div>
+        <div id="menue4">
+            <a href="/year/"> 年发电量 </a>
+        </div>
+    </div>
+
+    <div id="content-left">
+
+        <div id="Time">  时 间：<span id="time1" style="color:red;">  </span> </div>
+        <div id="daily">今日发电量：<span style="color:red;"> 455.8kwh </span> </div>
+        <div id="month"> 当月发电量：<span style="color:red;"> 62349.6kWh</span> </div>
+        <div id="year"> 当年发电量：<span style="color:red;"> 392814.3kWh </span> </div>
+        <div id="total"> 累计发电量：<span style="color:red;"> 419435.1kWh </span> </div>
+
+
+    </div>
+
+    <div  id="content-right">
+
+
+        <div id="main" style="background-color:white;height:400px;width:600px;top:20px;left:60px;"></div>
+
+
+    </div>
+    <script>
+        //显示日期
+        function mytime(){
+            var a = new Date();
+            var b = a.toLocaleTimeString();
+            var c = a.toLocaleDateString();
+            document.getElementById("time1").innerHTML = c+b;
+            }
+        setInterval(function() {mytime()},1000);
+    </script>
+    <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.min.js"></script>
+    <script type="text/javascript">
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        option = {
+
+            title : {
+                text: '实时功率',
+                x: 'center',
+                align: 'right'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['00','02','04','06','08','10','12','14','16','18','20','22']
+            },
+            yAxis: {
+                //name : '单位(kw)',
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} kw'
+                },
+            },
+            series: [{
+                name:'实时功率',
+                data: [0,0,0,0,10,20,15,14,22,34,20,0],
+                type: 'line',
+                smooth: true
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>

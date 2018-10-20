@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>高德地图监控</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+    <script src="https://webapi.amap.com/maps?v=1.4.8&key=28c4ca23a70f8cc7a4c0440036cbeeb5"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <style>
+    ul.padding
+    {
+        padding-left:2px;
+	    padding-right:30px
+    }
+    ul{
+       list-style:none;
+    }
+    #AK{
+       background-color:#dddddd;
+       padding-left:10px;
+       padding-right:10px;
+       position:absolute;
+       font-size:12px;
+       right:60px;
+       top:60px;
+       border-radius:3px;
+       border:1px solid #ccc;
+       line-height:30px;
+    }
+    #WX{
+       background-color:#dddddd;
+       padding-left:10px;
+       padding-right:10px;
+       position:absolute;
+       font-size:12px;
+       right:60px;
+       top:100px;
+       border-radius:3px;
+       border:1px solid #ccc;
+       line-height:30px;
+    }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="AK">
+    <a style="text-decoration:none;" href="/gaode/">地图</a>
+</div>
+<div id="WX">
+    <a style="text-decoration:none;" href="/gaode1/">卫星</a>
+</div>
+<script type="text/javascript">
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:5,
+        center: [108.940174, 34.341568],
+    });
+
+    var markers = [];
+    var infoWindow;
+    var marker;   //定义标记
+    var provinces=[{"fLong":'116.397428','fLati':'39.909','name':'朝阳区','state':'正常','power':'2.0200kw','celectricity':'23.5kwh','address':'北京市朝阳区'},
+                   { "fLong":'112.93533','fLati':'28.236018','name':'宁德区','state':'正常','power':'3.0120kw','celectricity':'63.5kwh','address':'长沙市宁德区'},
+                   { "fLong":'112.1842','fLati':'27.471','name':'井湾龚从文','state':'正常','power':'8.0120kw','celectricity':'23.5kwh','address':'湖南省娄底市井湾'},
+                   { "fLong":'110.2049','fLati':'29.414','name':'桑植县','state':'正常','power':'41.0120kw','celectricity':'83.5kwh','address':'张家界市桑植县'},
+                   { "fLong":'111.2321','fLati':'27.3754','name':'高升村','state':'正常','power':'5.0120kw','celectricity':'23.9kwh','address':'湖南省新邵县高升村'},
+                   { "fLong":'112.4555','fLati':'38.236018','name':'上兰村','state':'正常','power':'8.0120kw','celectricity':'19.5kwh','address':'太原市上兰村'},
+                   { "fLong":'110.294028','fLati':'27.3754','name':'王建平','state':'正常','power':'4.1200kw','celectricity':'33.5kwh','address':'桂林市七星区'},  //获取省份经纬度和信息
+                   {"fLong":'112.1153','fLati':'27.31611','name':'锁石金源赵炼文','state':'正常','power':'12.0200kw','celectricity':'63.5kwh','address':'湖南省娄底市锁石'}]
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -12)});  //定义视窗的偏移量
+    for(var i=0;i<provinces.length;i++){
+        marker = new AMap.Marker({
+            position:[provinces[i].fLong,provinces[i].fLati],     //获取经纬度
+            map: map,
+            offset: new AMap.Pixel(-12,-12),
+        });
+        marker.content = (
+                         "<ul class='padding'>\
+                         <li><span style='color:blue;'><b> 设备信息显示</b></span></li>"
+                         + "<li>  电站名称: <span style='color:blue'>"+provinces[i].name+"  </span></li>"
+                         + "<li>  电站状态: <span style='color:blue'>"+provinces[i].state+" </span></li>"
+                         + "<li>  当前功率: <span style='color:blue'>"+provinces[i].power+" </span></li>"
+                         + "<li>  今日发电: <span style='color:blue'>"+provinces[i].celectricity+" </span></li>"
+				         + "<li>  电站地址: <span style='color:blue'>"+provinces[i].address+"  </span></li></ul>");
+        marker.on('mouseover', markermouseover);
+        marker.emit('click', {target: marker});
+        marker.on('click', function(e) {
+            window.location.href=" /power/"
+        });
+    }
+
+    var gaojing = [ { "fLong":'103.913266','fLati':'30.593406','name':'双流区','state':'故障','power':'3.1120kw','celectricity':'26.5kwh','address':'四川省成都市双流区'}]
+    for(var j=0;j<gaojing.length;j++){
+        marker = new AMap.Marker({
+            position:[gaojing[j].fLong,gaojing[j].fLati],     //获取经纬度
+            map: map,
+            offset: new AMap.Pixel(-12,-12),
+            icon: new AMap.Icon({
+            size: new AMap.Size(30, 40),  //图标大小
+            image: "https://webapi.amap.com/theme/v1.3/images/newpc/way_btn2.png",
+            imageOffset: new AMap.Pixel(-5, -65)
+            })
+        });
+        marker.content = (
+                         "<ul class='padding'>\
+                         <li><span style='color:blue;'><b> 设备信息显示</b></span></li>"
+                         + "<li>  电站名称: <span style='color:blue'>"+gaojing[j].name+"  </span></li>"
+                         + "<li>  电站状态: <span style='color:red'>"+gaojing[j].state+" </span></li>"
+                         + "<li>  当前功率: <span style='color:blue'>"+gaojing[j].power+" </span></li>"
+                         + "<li>  今日发电: <span style='color:blue'>"+gaojing[j].celectricity+" </span></li>"
+				         + "<li>  电站地址: <span style='color:blue'>"+gaojing[j].address+"  </span></li></ul>");
+        marker.on('mouseover', markermouseover);
+        marker.emit('click', {target: marker});
+        marker.on('click', function(e) {
+           window.location.href="/power/"
+        });
+    }
+
+    function markermouseover(e) {
+        infoWindow.setContent(e.target.content);
+        infoWindow.open(map, e.target.getPosition());
+    }
+</script>
+</body>
+</html>

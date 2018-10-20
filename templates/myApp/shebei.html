@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设备管理</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        th{
+            text-align:center;
+        }
+        .hide{
+            display:none;
+        }
+        .shadow{
+            position:fixed;
+            left:0;
+            top:0;
+            right:0;
+            bottom:0;
+            background-color:black;
+            opacity:0.4;
+            z-index:999;
+        }
+        .modal1{
+            z-index:1000;
+            position:fixed;
+            left:50%;
+            top:50%;
+            height:450px;
+            width:400px;
+            background-color:white;
+            margin-left:-200px;
+            margin-top:-240px;
+        }
+    </style>
+</head>
+<body>
+     <ol class="breadcrumb">
+              <li><a href="#">首页</a></li>
+              <li><a href="#">设备管理</a></li>
+              <li class="active">设备信息</li>
+     </ol>
+     <div style="margin:0px 0px 10px 0px;">
+          &nbsp;<a class="btn btn-info" onclick="showModal()" href="#">添加新设备 </a>
+     </div>
+     <table  class="table table-bordered table-striped table-hover">
+         <thead>
+              <tr>
+                  <th><i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>&nbsp;逆变器号 </th>
+                  <th><i class="fa fa-address-book-o" aria-hidden="true"></i>&nbsp;设备SN</th>
+                  <th><i class="fa fa-address-book" aria-hidden="true"></i>&nbsp;PN号</th>
+                  <th><i class="fa fa-adjust" aria-hidden="true"></i>&nbsp;设备状态</th>
+                  <th><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i>&nbsp;设备协议</th>
+                  <th><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp;所属电站</th>
+                  <th><i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;所属业主</th>
+                  <th><i class="fa fa-cog" aria-hidden="true"></i> &nbsp;操作</th>
+              </tr>
+         </thead>
+         <tbody>
+              {% for row in shebei_list %}
+                 <tr style="text-align:center;">
+                     <td style="display:none;"> {{ row.id }}</td>
+                     <td> {{ row.name_n }} </td>
+                     <td> {{ row.name_sn }}</td>
+                     <td> {{ row.name_pn }}</td>
+                     <td> {{ row.state }}  </td>
+                     <td> {{ row.protocol }}</td>
+                     <td> {{ row.belong_p }}</td>
+                     <td> {{ row.belong_o }}</td>
+                     <td>
+                         <a style="text-decoration:none;"  onclick="return modelEdit(this);" href="#"/><i class="fa fa-pencil-square-o" aria-hidden="true"></i>编辑&nbsp;</a>
+                         &nbsp;
+                         <a style="text-decoration:none;" href="/delshebei/?nid={{row.id}}"<i class="fa fa-times-circle" aria-hidden="true"></i>删除 </a>
+                     </td>
+                 </tr>
+              {% endfor %}
+         </tbody>
+     </table>
+
+     <nav aria-label="Page navigation">
+          <ul class="pagination">
+              {{ page_info.pager|safe }}
+          </ul>
+     </nav>
+
+     <div id="shadow" class="shadow hide"></div>
+
+     <div id="modal" class="modal1 hide">
+         <h3>&nbsp;&nbsp;&nbsp;新设备信息 </h3><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;逆变器号：<input id="name_n" type="text" name="name_n"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备SN：&nbsp;&nbsp;<input id="name_sn" type="text" name="name_sn"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PN号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="name_pn" type="text" name="name_pn"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备状态：<input id="state" type="text" name="state"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备协议：<input id="protocol" type="text" name="protocol"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属电站：<input id="belong_p" type="text" name="belong_p"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属业主：<input id="belong_o" type="text" name="belong_o"/><br><br>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="提交" onclick="AjaxSend();"/>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="取消" onclick="cancleModal();"/>
+         &nbsp;&nbsp;&nbsp;<span style="color:red;" id="errormsg"></span>
+     </div>
+
+     <div id="Editmodal" class="modal1 hide">
+         <h3> &nbsp;&nbsp;&nbsp;编辑设备信息 </h3><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;逆变器号：<input id="editname_n" type="text" name="name_n"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备SN： &nbsp;<input id="editname_sn" type="text" name="name_sn"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PN号：   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="editname_pn" type="text" name="name_pn"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备状态：<input id="editstate" type="text" name="state"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;设备协议：<input id="editprotocol" type="text" name="protocol"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属电站：<input id="editbelong_p" type="text" name="belong_p"/><br><br>
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属业主：<input id="editbelong_o" type="text" name="belong_o"/><br><br>
+                                                          <input id="editid" type="text" name="id" style="display:none"/>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="提交" onclick="editAjaxSend();"/>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="取消" onclick="cancleModal();"/>
+     </div>
+
+     <script>
+         //该函数触发对话框
+         function showModal(){
+             document.getElementById("shadow").classList.remove("hide");
+             document.getElementById("modal").classList.remove("hide");
+         }
+         //取消对话框
+         function cancleModal(){
+             document.getElementById("shadow").classList.add("hide");
+             document.getElementById("modal").classList.add("hide");         //取消新增对话框
+             document.getElementById("Editmodal").classList.add("hide");     //取消编辑对话框
+         }
+
+         function AjaxSend(){
+            $.ajax({
+                url:'/modal_add_shebei/',
+                type:'POST',                              //提交数据到后端
+                data:{ 'name_n':$('#name_n').val(), 'name_sn':$('#name_sn').val(), 'name_pn':$('#name_pn').val(), 'state':$('#state').val(), 'protocol':$('#protocol').val(), 'belong_p':$('#belong_p').val(), 'belong_o':$('#belong_o').val()},       //注意逗号不要少，获取数据
+                success:function(data){                   //后端处理数据成功后，返回成功处理该函数，data是返回的数据
+                     console.log(data);                    //调试台
+                     if (data=="ok"){
+                        location.reload();        //页面跳转
+                     }
+                     else{
+                        $("#errormsg").text(data);            //对话框提示
+                     }
+                }
+            });
+         }
+
+         function modelEdit(ths){
+             document.getElementById("shadow").classList.remove("hide");   //移除隐藏的编辑对话框
+             document.getElementById("Editmodal").classList.remove("hide");  //移除隐藏的编辑对话框
+             var row = $(ths).parent().prevAll();        //获取当前标签全部父标签
+
+             var content_belong_o = $(row[0]).text();              //row[0]获取父标签顺序是倒序往上    //return false;阻止后续事件发生
+             $('#editbelong_o').val(content_belong_o);
+
+             var content_belong_p = $(row[1]).text();
+             $('#editbelong_p').val(content_belong_p);
+
+             var content_protocol = $(row[2]).text();
+             $('#editprotocol').val(content_protocol);
+
+             var content_state = $(row[3]).text();
+             $('#editstate').val(content_state);
+
+             var content_name_pn = $(row[4]).text();
+             $('#editname_pn').val(content_name_pn);
+
+             var content_name_sn = $(row[5]).text();
+             $('#editname_sn').val(content_name_sn);
+
+             var content_name_n = $(row[6]).text();
+             $('#editname_n').val(content_name_n);
+
+             var content_id = $(row[7]).text();
+             $('#editid').val(content_id);
+         }
+          //将编辑对话框的数据提交到后台
+         function editAjaxSend(){
+             //获取用户新输入的值
+             var  name_n= $('#editname_n').val();
+             var name_sn = $('#editname_sn').val();
+             var name_pn = $('#editname_pn').val();
+             var state = $('#editstate').val();
+             var protocol = $('#editprotocol').val();
+             var belong_p = $('#editbelong_p').val();
+             var belong_o = $('#editbelong_o').val();
+             var nid = $('#editid').val();
+             $.ajax({
+                 url:'/modal_edit_shebei/',
+                 type:'POST',
+                 data:{'name_n':name_n,'name_sn':name_sn,'name_pn':name_pn,'state':state,'protocol':protocol,'belong_p':belong_p,'belong_o':belong_o,'nid':nid},
+                 success:function(arg){
+                     //arg是字符串类型
+                    //JSON.parse(字符串)=>对象
+                    //JSON.stringify(对象)=>字符串
+                     arg = JSON.parse(arg);
+                     if(arg.status){      //判断状态
+                           location.reload();  //当前页面刷新
+                     }
+                     else{
+                           location.reload();
+                     }
+                 }
+             });
+         }
+     </script>
+</body>
+</html>
